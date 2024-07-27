@@ -295,7 +295,12 @@ func (s *SampleBuilder) Push(p *rtp.Packet) {
 	seqno := p.SequenceNumber
 	ts := p.Timestamp
 	last := s.dec(s.head)
-	lastSeqno := s.packets[last].packet.SequenceNumber
+	lastPacket := s.packets[last].packet
+	if lastPacket == nil {
+		return
+	}
+
+	lastSeqno := lastPacket.SequenceNumber
 	if seqno == lastSeqno+1 {
 		// sequential
 		if s.tail == s.inc(s.head) {
