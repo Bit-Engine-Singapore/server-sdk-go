@@ -311,7 +311,7 @@ func (s *SampleBuilder) Push(p *rtp.Packet) {
 		// drop may have dropped the whole buffer
 		if s.tail != s.head {
 			start = s.packets[last].end ||
-				s.packets[last].packet.Timestamp != p.Timestamp ||
+				lastPacket.Timestamp != p.Timestamp ||
 				s.isStart(p)
 			if start {
 				s.packets[last].end = true
